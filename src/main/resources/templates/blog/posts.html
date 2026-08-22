@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Mein Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Mein Blog</h1>
+        <div th:each="post : ${posts}">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${post.title}">Post Titel</h5>
+                    <p class="card-text" th:text="${post.content}">Post Inhalt</p>
+                    <a th:href="@{/blog/posts/{id}(id=${post.id})}" class="btn btn-primary">Weiterlesen</a>
+                </div>
+                <div class="card-footer text-muted">
+                    Erstellt am: <span th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy HH:mm')}">Datum</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
