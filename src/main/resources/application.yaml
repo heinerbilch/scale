@@ -13,3 +13,7 @@ management:
   endpoint:
     env:
       show-values: always
+
+logging:
+  level:
+    '[eu.bilch.scale]': debug
