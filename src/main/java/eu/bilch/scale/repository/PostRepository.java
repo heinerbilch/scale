@@ -6,4 +6,6 @@ import eu.bilch.scale.model.Post;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findAllByOrderByCreatedAtDesc();
+    List<Post> findByAuthorId(Long authorId);
+    List<Post> findByTitleContainingIgnoreCase(String title);
 }
