@@ -25,8 +25,7 @@ public class BlogController {
 
     @GetMapping("/{id}")
     public String showPost(@PathVariable Long id, Model model) {
-        model.addAttribute("post", postRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Post not found")));
+        model.addAttribute("post", postRepository.findById(id));
         return "blog/post";
     }
 }
