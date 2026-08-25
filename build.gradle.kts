@@ -38,6 +38,13 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
+tasks.register<Test>("integrationTest") {
+	group = "verification"
+	description = "Runs integration tests"
+	include("**/*IT.class")
+	systemProperty("spring.profiles.active", "test")
+}
+
 tasks.bootBuildImage {
 	builder.set("paketobuildpacks/builder-jammy-buildpackless-tiny")
 	buildpacks.add("paketobuildpacks/java")

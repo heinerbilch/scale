@@ -40,6 +40,13 @@ public class Post {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id")
+    private User author;
+
     public Long getId() {
         return id;
     }
@@ -95,12 +102,5 @@ public class Post {
     public void setAuthor(User author) {
         this.author = author;
     }
-
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id")
-    private User author;
 
 }

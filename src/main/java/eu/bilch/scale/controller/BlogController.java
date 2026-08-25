@@ -25,7 +25,7 @@ public class BlogController {
 
     @GetMapping("/{id}")
     public String showPost(@PathVariable Long id, Model model) {
-        model.addAttribute("post", postRepository.findById(id));
+        model.addAttribute("post", postRepository.findById(id).get());
         return "blog/post";
     }
 }

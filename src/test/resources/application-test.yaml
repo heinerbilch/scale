@@ -12,3 +12,11 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+    open-in-view: false
+
+
+logging:
+  level:
+    '[eu.bilch.scale]': debug
+    '[org.hibernate]': debug
+    '[org.springframework.data]': debug

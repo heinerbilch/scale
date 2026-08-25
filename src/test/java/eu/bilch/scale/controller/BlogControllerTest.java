@@ -10,8 +10,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 
 import java.util.Collections;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
@@ -58,10 +60,9 @@ public class BlogControllerTest {
     public void testShowPostNotFound() {
         when(postRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        try {
-            blogController.showPost(1L, model);
-        } catch (ResourceNotFoundException e) {
-            assert "Post not found".equals(e.getMessage());
-        }
+        assertThrows(
+            NoSuchElementException.class,
+            () -> blogController.showPost(1L, model)
+        );
     }
 }
