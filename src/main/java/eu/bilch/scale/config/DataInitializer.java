@@ -19,8 +19,7 @@ public class DataInitializer {
 
     private static final Logger log = LoggerFactory.getLogger(DataInitializer.class);
 
-    @Bean
-    public CommandLineRunner initData(PostRepository postRepository, UserRepository userRepository) {
+    @Bean CommandLineRunner initData(PostRepository postRepository, UserRepository userRepository) {
         log.debug("Initializing users and posts");
         return args -> {
             // Prüfen, ob bereits Posts existieren

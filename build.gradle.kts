@@ -1,5 +1,6 @@
 plugins {
 	java
+	`jvm-test-suite`
 	id("org.springframework.boot") version "4.1.1"
 	id("io.spring.dependency-management") version "1.1.7"
 }
@@ -19,11 +20,9 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-webmvc")
-//	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("com.h2database:h2")
-	implementation("org.springframework.boot:spring-boot-h2console:4.1.1")
+	implementation("org.springframework.boot:spring-boot-h2console")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
@@ -34,15 +33,38 @@ springBoot {
 	buildInfo()
 }
 
-tasks.withType<Test> {
-	useJUnitPlatform()
+testing {
+    suites {
+        val test = named<JvmTestSuite>("test") {
+            useJUnitJupiter()
+        }
+
+        register<JvmTestSuite>("integrationTest") {
+            dependencies {
+                implementation("org.springframework.boot:spring-boot-starter-webmvc-test")
+                implementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
+                implementation("org.springframework.boot:spring-boot-h2console")
+                implementation(project())
+            }
+            // Configure the source set for integration tests
+            sources {
+                java {
+                    setSrcDirs(listOf("src/it/java"))
+                }
+            }
+            targets {
+                all {
+                    testTask.configure {
+                        shouldRunAfter(test)
+                    }
+                }
+            }
+        }
+    }
 }
 
-tasks.register<Test>("integrationTest") {
-	group = "verification"
-	description = "Runs integration tests"
-	include("**/*IT.class")
-	systemProperty("spring.profiles.active", "test")
+tasks.named("check") { 
+    dependsOn(testing.suites.named("integrationTest"))
 }
 
 tasks.bootBuildImage {
