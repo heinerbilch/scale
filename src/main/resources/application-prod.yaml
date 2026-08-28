@@ -1,8 +1,6 @@
 spring:
   application:
     name: scale
-  profiles:
-    active: prod
   datasource:
     url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
@@ -34,33 +32,5 @@ management:
 
 logging:
   level:
-    '[eu.bilch.scale]': debug
+    '[eu.bilch.scale]': info
     org.hibernate.SQL: debug
-    org.hibernate.type.descriptor.sql.BasicBinder: trace
-
----
-# Development profile
-spring:
-  config:
-    activate:
-      on-profile: dev
-  datasource:
-    url: jdbc:h2:mem:blogdb
-    driverClassName: org.h2.Driver
-    username: sa
-    password: tiger
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-  jpa:
-    hibernate:
-      ddl-auto: update
-    open-in-view: false
-
-server:
-  port: 8080
-
-logging:
-  level:
-    '[eu.bilch.scale]': debug
