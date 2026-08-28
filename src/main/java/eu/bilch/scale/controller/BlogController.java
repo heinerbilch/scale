@@ -1,5 +1,7 @@
 package eu.bilch.scale.controller;
 
+import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +42,7 @@ public class BlogController {
 
     @PostMapping
     public String createPost(@ModelAttribute Post post) {
+        post.setCreatedAt(LocalDateTime.now());
         postRepository.save(post);
         return "redirect:/blog/posts";
     }
