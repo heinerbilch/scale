@@ -14,7 +14,6 @@ import eu.bilch.scale.model.Post;
 import eu.bilch.scale.repository.PostRepository;
 
 @Controller
-@RequestMapping("/blog/posts")
 public class BlogController {
     private final PostRepository postRepository;
 
@@ -22,25 +21,36 @@ public class BlogController {
         this.postRepository = postRepository;
     }
 
-    @GetMapping
+    @GetMapping("/")
+    public String showLandingPage(Model model) {
+        var allPosts = postRepository.findAllByOrderByCreatedAtDesc();
+        if (!allPosts.isEmpty()) {
+            model.addAttribute("featuredPost", allPosts.get(0));
+        }
+        var recentPosts = allPosts.stream().limit(3).toList();
+        model.addAttribute("recentPosts", recentPosts);
+        return "index";
+    }
+
+    @GetMapping("/blog/posts")
     public String listPosts(Model model) {
         model.addAttribute("posts", postRepository.findAllByOrderByCreatedAtDesc());
         return "blog/posts";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/blog/posts/{id}")
     public String showPost(@PathVariable Long id, Model model) {
         model.addAttribute("post", postRepository.findById(id).get());
         return "blog/post";
     }
 
-    @GetMapping("/new")
+    @GetMapping("/blog/posts/new")
     public String showCreatePostForm(Model model) {
         model.addAttribute("post", new Post());
         return "blog/create-post";
     }
 
-    @PostMapping
+    @PostMapping("/blog/posts")
     public String createPost(@ModelAttribute Post post) {
         post.setCreatedAt(LocalDateTime.now());
         postRepository.save(post);
