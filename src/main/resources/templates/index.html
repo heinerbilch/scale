@@ -409,6 +409,19 @@
             transform: translateY(-2px);
         }
 
+        .user-nav-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-nav-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
         @media (max-width: 768px) {
             .hero-title {
                 font-size: 2.5rem;
@@ -437,10 +450,13 @@
     <nav class="nav-bar">
         <div class="nav-container">
             <a href="/" class="nav-brand serif-font">Scale</a>
-            <div class="nav-links">
-                <a href="/">Startseite</a>
-                <a href="/blog/posts">Blog</a>
-                <a href="#" class="cta-button">Abonnieren</a>
+            <div class="d-flex gap-2">
+                <div th:if="${currentUser != null}" class="user-nav-info">
+                    <img th:src="${currentUser.profilePicture}" class="user-nav-avatar" alt="Profilbild" th:unless="${currentUser.profilePicture == null}">
+                    <span th:text="${currentUser.firstName}">Benutzer</span>
+                </div>
+                <a th:if="${currentUser == null}" href="/login" class="btn btn-outline-primary">Anmelden</a>
+                <a th:if="${currentUser != null}" href="/logout" class="btn btn-outline-danger">Abmelden</a>
             </div>
         </div>
     </nav>
@@ -449,10 +465,11 @@
     <section class="hero-section">
         <div class="hero-content">
             <h1 class="hero-title serif-font">Willkommen beim Scale Blog</h1>
-            <p class="hero-subtitle">Entdecke faszinierende Geschichten, tiefgehende Analysen und inspirierende Ideen, die deinen Horizont erweitern. Tauche ein in eine Welt des Wissens und der Kreativität.</p>
+            <p class="hero-subtitle">Entdecke faszinierende Geschichten, tiefgehende Analysen und inspirierende Ideen, die deinen Horizont erweitern.</p>
             <div class="d-flex gap-3 justify-content-center flex-wrap">
                 <a href="/blog/posts" class="btn btn-primary-custom">Alle Artikel lesen</a>
-                <a href="/blog/posts/new" class="btn btn-outline-custom">Post erstellen</a>
+                <a th:if="${currentUser != null}" href="/blog/posts/new" class="btn btn-outline-custom">Post erstellen</a>
+                <a th:if="${currentUser == null}" href="/login" class="btn btn-outline-custom">Anmelden</a>
             </div>
         </div>
     </section>
@@ -465,13 +482,14 @@
                 <div class="featured-image"></div>
                 <div class="featured-content">
                     <div class="post-meta">
-                        <div class="author-avatar" th:text="${#strings.substring(featuredPost.author != null ? featuredPost.author.username : 'S', 0, 1)}">S</div>
-                        <span th:text="${featuredPost.author != null ? featuredPost.author.username : 'Scale Team'}">Scale Team</span>
+                        <div class="author-avatar" th:text="${#strings.substring(featuredPost.author != null ? featuredPost.author.firstName : 'S', 0, 1)}" th:unless="${featuredPost.author != null && featuredPost.author.profilePicture != null}">S</div>
+                        <img th:src="${featuredPost.author.profilePicture}" class="author-avatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;" alt="Autor" th:if="${featuredPost.author != null && featuredPost.author.profilePicture != null}">
+                        <span th:text="${featuredPost.author != null ? featuredPost.author.firstName + ' ' + featuredPost.author.lastName : 'Scale Team'}">Scale Team</span>
                         <span th:text="${#temporals.format(featuredPost.createdAt, 'dd.MM.yyyy')}">28.08.2024</span>
                         <span>• 5 Min. Lesezeit</span>
                     </div>
                     <h3 class="post-title" th:text="${featuredPost.title}">Der Weg zur perfekten Produktivität</h3>
-                    <p class="post-excerpt" th:text="${#strings.substring(featuredPost.content, 0, 200) + '...'}">Lerne, wie du durch einfache Routinen deine Produktivität um 200% steigern kannst. Praktische Tipps und wissenschaftliche Erkenntnisse...</p>
+                    <p class="post-excerpt" th:text="${#strings.substring(featuredPost.content, 0, 200) + '...'}">Lerne, wie du durch einfache Routinen deine Produktivität um 200% steigern kannst...</p>
                     <a th:href="@{/blog/posts/{id}(id=${featuredPost.id})}" class="read-more">
                         Weiterlesen <i class="fas fa-arrow-right"></i>
                     </a>
@@ -490,12 +508,13 @@
                         <div class="post-card-image"></div>
                         <div class="post-card-content">
                             <div class="post-meta">
-                                <div class="author-avatar" th:text="${#strings.substring(post.author != null ? post.author.username : 'S', 0, 1)}">S</div>
-                                <span th:text="${post.author != null ? post.author.username : 'Scale Team'}">Scale Team</span>
+                                <div class="author-avatar" th:text="${#strings.substring(post.author != null ? post.author.firstName : 'S', 0, 1)}" th:unless="${post.author != null && post.author.profilePicture != null}">S</div>
+                                <img th:src="${post.author.profilePicture}" class="author-avatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;" alt="Autor" th:if="${post.author != null && post.author.profilePicture != null}">
+                                <span th:text="${post.author != null ? post.author.firstName + ' ' + post.author.lastName : 'Scale Team'}">Scale Team</span>
                                 <span th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')}">28.08.2024</span>
                             </div>
                             <h4 class="post-card-title" th:text="${post.title}">Der Aufstieg der KI</h4>
-                            <p class="post-card-excerpt" th:text="${#strings.substring(post.content, 0, 100) + '...'}">Wie künstliche Intelligenz unsere Welt verändert und was das für uns bedeutet...</p>
+                            <p class="post-card-excerpt" th:text="${#strings.substring(post.content, 0, 100) + '...'}">Wie künstliche Intelligenz unsere Welt verändert...</p>
                             <a th:href="@{/blog/posts/{id}(id=${post.id})}" class="read-more">
                                 Weiterlesen <i class="fas fa-arrow-right"></i>
                             </a>

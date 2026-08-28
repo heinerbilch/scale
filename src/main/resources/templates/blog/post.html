@@ -3,13 +3,57 @@
 <head>
     <title th:text="${post.title}">Post Titel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .user-avatar-small {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .post-author {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="/blog/posts" class="btn btn-outline-secondary">← Zurück zur Übersicht</a>
+            <div class="d-flex gap-2">
+                <div th:if="${currentUser != null}" class="user-info">
+                    <img th:src="${currentUser.profilePicture}" class="user-avatar-small" alt="Profilbild" th:unless="${currentUser.profilePicture == null}">
+                    <span th:text="${currentUser.firstName}">Benutzer</span>
+                </div>
+                <a th:if="${currentUser == null}" href="/login" class="btn btn-outline-primary">Anmelden</a>
+                <a th:if="${currentUser != null}" href="/logout" class="btn btn-outline-danger">Abmelden</a>
+            </div>
+        </div>
+
         <h1 th:text="${post.title}">Post Titel</h1>
-        <p th:text="${post.content}">Post Inhalt</p>
-        <p>Erstellt am: <span th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy HH:mm')}">Datum</span></p>
-        <a href="/blog/posts" class="btn btn-secondary">Zurück zur Übersicht</a>
+        
+        <div class="post-author mb-3" th:if="${post.author != null}">
+            <img th:src="${post.author.profilePicture}" class="user-avatar-small" alt="Autor" th:unless="${post.author.profilePicture == null}">
+            <span th:text="${post.author.firstName + ' ' + post.author.lastName}">Autor</span>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-body">
+                <p class="card-text" th:text="${post.content}">Post Inhalt</p>
+            </div>
+        </div>
+        
+        <p class="text-muted">Erstellt am: <span th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy HH:mm')}">Datum</span></p>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
