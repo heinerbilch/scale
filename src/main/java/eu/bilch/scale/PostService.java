@@ -22,7 +22,7 @@ public class PostService {
 
     @Cacheable(value = "posts", key = "#id")
     public Post findById(Long id) {
-        return postRepository.findById(id)
+        return postRepository.findByIdWithAuthor(id)
             .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
     }
 
