@@ -2,6 +2,8 @@ package eu.bilch.scale.config;
 
 import eu.bilch.scale.model.User;
 import eu.bilch.scale.repository.UserRepository;
+import jakarta.transaction.Transactional;
+
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -15,6 +17,7 @@ import java.util.Collections;
 import java.util.Map;
 
 @Service
+@Transactional
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private final UserRepository userRepository;

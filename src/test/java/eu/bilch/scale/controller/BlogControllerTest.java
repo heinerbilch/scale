@@ -40,7 +40,7 @@ public class BlogControllerTest {
     public void testListPosts() {
         when(postRepository.findAllByOrderByCreatedAtDesc()).thenReturn(Collections.emptyList());
 
-        String viewName = blogController.listPosts(model);
+        String viewName = blogController.listPosts(model, null);
 
         verify(model).addAttribute(eq("posts"), any());
         assert "blog/posts".equals(viewName);
@@ -50,7 +50,7 @@ public class BlogControllerTest {
     public void testShowPost() {
         when(postRepository.findById(anyLong())).thenReturn(Optional.of(new Post()));
 
-        String viewName = blogController.showPost(1L, model);
+        String viewName = blogController.showPost(1L, model, null);
 
         verify(model).addAttribute(eq("post"), any());
         assert "blog/post".equals(viewName);
@@ -62,7 +62,7 @@ public class BlogControllerTest {
 
         assertThrows(
             NoSuchElementException.class,
-            () -> blogController.showPost(1L, model)
+            () -> blogController.showPost(1L, model, null)
         );
     }
 }
