@@ -489,7 +489,7 @@
                         <span>• 5 Min. Lesezeit</span>
                     </div>
                     <h3 class="post-title" th:text="${featuredPost.title}">Der Weg zur perfekten Produktivität</h3>
-                    <p class="post-excerpt" th:text="${#strings.substring(featuredPost.content, 0, 200) + '...'}">Lerne, wie du durch einfache Routinen deine Produktivität um 200% steigern kannst...</p>
+                    <p class="post-excerpt" th:text="${#strings.substring(featuredPost.content, 0, 10) + '...'}">Lerne, wie du durch einfache Routinen deine Produktivität um 200% steigern kannst...</p>
                     <a th:href="@{/blog/posts/{id}(id=${featuredPost.id})}" class="read-more">
                         Weiterlesen <i class="fas fa-arrow-right"></i>
                     </a>
@@ -514,7 +514,7 @@
                                 <span th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')}">28.08.2024</span>
                             </div>
                             <h4 class="post-card-title" th:text="${post.title}">Der Aufstieg der KI</h4>
-                            <p class="post-card-excerpt" th:text="${#strings.substring(post.content, 0, 100) + '...'}">Wie künstliche Intelligenz unsere Welt verändert...</p>
+                            <p class="post-card-excerpt" th:text="${#strings.substring(post.content, 0, 10) + '...'}">Wie künstliche Intelligenz unsere Welt verändert...</p>
                             <a th:href="@{/blog/posts/{id}(id=${post.id})}" class="read-more">
                                 Weiterlesen <i class="fas fa-arrow-right"></i>
                             </a>
@@ -556,7 +556,7 @@
                 <a href="#"><i class="fab fa-github"></i></a>
             </div>
             <div class="copyright">
-                © <span th:text="${#temporals.year(#temporals.now())}">2024</span> Scale Blog. Alle Rechte vorbehalten.
+                © <span>2024</span> Scale Blog. Alle Rechte vorbehalten.
             </div>
         </div>
     </footer>

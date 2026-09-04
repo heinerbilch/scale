@@ -53,7 +53,7 @@ public class BlogController {
 
     @GetMapping("/blog/posts/{id}")
     public String showPost(@PathVariable Long id, Model model, @AuthenticationPrincipal OAuth2User principal) {
-        postRepository.findByIdWithAuthor(id).ifPresent(post -> {
+        postRepository.findByAuthor(id).ifPresent(post -> {
             model.addAttribute("post", post);
         });
         

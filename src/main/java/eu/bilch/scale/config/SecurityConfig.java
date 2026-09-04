@@ -17,8 +17,7 @@ public class SecurityConfig {
         this.userRepository = userRepository;
     }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    @Bean SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/", "/index", "/blog/posts", "/blog/posts/{id}", "/login**", "/oauth2/**", "/css/**", "/js/**", "/error**").permitAll()
@@ -43,8 +42,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public CustomOAuth2UserService customOAuth2UserService() {
+    @Bean CustomOAuth2UserService customOAuth2UserService() {
         return new CustomOAuth2UserService(userRepository);
     }
 }

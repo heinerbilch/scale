@@ -49,7 +49,7 @@ testing {
                 implementation("org.springframework.boot:spring-boot-starter-webmvc-test")
                 implementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
                 implementation("org.springframework.boot:spring-boot-h2console")
-	            implementation("org.springframework.boot:spring-boot-starter-security-test")
+                implementation("org.springframework.boot:spring-boot-starter-security-test")
                 implementation(project())
             }
             // Configure the source set for integration tests
@@ -69,7 +69,7 @@ testing {
     }
 }
 
-tasks.named("check") { 
+tasks.named("check") {
     dependsOn(testing.suites.named("integrationTest"))
 }
 

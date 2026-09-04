@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Profile;
 import java.time.LocalDateTime;
 
 @Configuration
-@Profile("dev")
+@Profile("default")
 public class DataInitializer {
 
     private static final Logger log = LoggerFactory.getLogger(DataInitializer.class);

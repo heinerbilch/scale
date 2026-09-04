@@ -17,5 +17,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByTitleContainingIgnoreCase(String title);
 
     @EntityGraph(attributePaths = {"author"})
-    Optional<Post> findByIdWithAuthor(Long id);
+    Optional<Post> findByAuthor(Long id);
 }

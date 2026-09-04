@@ -1,51 +1,6 @@
 spring:
   application:
     name: scale
-  profiles:
-    active: prod
-  datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-    open-in-view: false
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: ${GOOGLE_CLIENT_ID}
-            client-secret: ${GOOGLE_CLIENT_SECRET}
-            scope: openid,email,profile
-            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
-            client-authentication-method: client_secret_basic
-            authorization-grant-type: authorization_code
-
-server:
-  port: ${PORT:8080}
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    env:
-      show-values: always
-
-logging:
-  level:
-    '[eu.bilch.scale]': debug
-
----
-# Development profile
-spring:
-  config:
-    activate:
-      on-profile: dev
   datasource:
     url: jdbc:h2:mem:blogdb
     driverClassName: org.h2.Driver
@@ -70,7 +25,16 @@ spring:
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
 
 server:
-  port: 8080
+  port: ${PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    env:
+      show-values: always
 
 logging:
   level:
