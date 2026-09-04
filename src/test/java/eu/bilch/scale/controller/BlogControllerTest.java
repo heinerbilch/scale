@@ -101,10 +101,10 @@ public class BlogControllerTest {
     public void testShowPostNotFound() {
         when(postRepository.findByAuthor(anyLong())).thenReturn(Optional.empty());
 
-        assertThrows(
-            NoSuchElementException.class,
-            () -> blogController.showPost(1L, model, principal)
-        );
+        String viewName = blogController.showPost(1L, model, principal);
+
+        verify(model, never()).addAttribute(eq("post"), any());
+        assertEquals("blog/post", viewName);
     }
 
     @Test
