@@ -53,17 +53,7 @@ public class BlogController {
 
     @GetMapping("/blog/posts/{id}")
     public String showPost(@PathVariable Long id, Model model, @AuthenticationPrincipal OAuth2User principal) {
-        postRepository.findByAuthor(id).ifPresent(post -> {
-            model.addAttribute("post", post);
-        });
-        
-        // Aktuellen User hinzufügen, falls eingeloggt
-        if (principal != null) {
-            String email = principal.getAttribute("email");
-            userRepository.findByEmail(email).ifPresent(user -> {
-                model.addAttribute("currentUser", user);
-            });
-        }
+        model.addAttribute("post", postRepository.findById(id).orElseThrow());
         return "blog/post";
     }
 

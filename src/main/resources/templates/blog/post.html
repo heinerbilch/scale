@@ -30,22 +30,9 @@
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <a href="/blog/posts" class="btn btn-outline-secondary">← Zurück zur Übersicht</a>
-            <div class="d-flex gap-2">
-                <div th:if="${currentUser != null}" class="user-info">
-                    <img th:src="${currentUser.profilePicture}" class="user-avatar-small" alt="Profilbild" th:unless="${currentUser.profilePicture == null}">
-                    <span th:text="${currentUser.firstName}">Benutzer</span>
-                </div>
-                <a th:if="${currentUser == null}" href="/login" class="btn btn-outline-primary">Anmelden</a>
-                <a th:if="${currentUser != null}" href="/logout" class="btn btn-outline-danger">Abmelden</a>
-            </div>
         </div>
 
         <h1 th:text="${post.title}">Post Titel</h1>
-        
-        <div class="post-author mb-3" th:if="${post.author != null}">
-            <img th:src="${post.author.profilePicture}" class="user-avatar-small" alt="Autor" th:unless="${post.author.profilePicture == null}">
-            <span th:text="${post.author.firstName + ' ' + post.author.lastName}">Autor</span>
-        </div>
         
         <div class="card mb-4">
             <div class="card-body">
