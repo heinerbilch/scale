@@ -20,10 +20,11 @@ spring:
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_CLIENT_SECRET}
             scope: openid,email,profile
-            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            redirect-uri: "https://cloud.bilch.eu/login/oauth2/code/google"
 
 server:
   port: ${PORT:8080}
+  forward-headers-strategy: framework
 
 management:
   endpoints:
