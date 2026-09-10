@@ -10,6 +10,12 @@ spring:
     hibernate:
       ddl-auto: update
     open-in-view: false
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            redirect-uri: "https://cloud.bilch.eu/login/oauth2/code/google"
 
 management:
   endpoints:

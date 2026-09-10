@@ -20,7 +20,6 @@ spring:
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_CLIENT_SECRET}
             scope: openid,email,profile
-            redirect-uri: "https://cloud.bilch.eu/login/oauth2/code/google"
 
 server:
   port: ${PORT:8080}
@@ -38,3 +37,5 @@ management:
 logging:
   level:
     '[eu.bilch.scale]': debug
+    '[web]': debug
+    '[org.springframework.security]': debug
