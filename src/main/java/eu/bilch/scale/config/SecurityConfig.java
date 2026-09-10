@@ -5,7 +5,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.web.SecurityFilterChain;
+
+import java.util.Collection;
 
 @Configuration
 @EnableWebSecurity
@@ -42,7 +46,13 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean CustomOAuth2UserService customOAuth2UserService() {
+    @Bean
+    CustomOAuth2UserService customOAuth2UserService() {
         return new CustomOAuth2UserService(userRepository);
+    }
+
+    @Bean
+    GrantedAuthoritiesMapper userAuthoritiesMapper() {
+        return (authorities) -> authorities;
     }
 }
