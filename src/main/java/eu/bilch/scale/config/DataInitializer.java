@@ -27,7 +27,6 @@ public class DataInitializer {
                 // Dummy-User erstellen (falls nicht vorhanden)
                 User dummyUser = userRepository.findById(1L).orElseGet(() -> {
                     User user = new User();
-                    user.setId(1L);
                     user.setUsername("dummyUser");
                     user.setPassword("dummyTiger");
                     user.setEmail("dummy@example.com");

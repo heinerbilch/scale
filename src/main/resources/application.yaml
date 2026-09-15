@@ -38,4 +38,4 @@ logging:
   level:
     '[eu.bilch.scale]': debug
     '[web]': debug
-    '[org.springframework.security]': debug
+    '[org.springframework.security]': info
