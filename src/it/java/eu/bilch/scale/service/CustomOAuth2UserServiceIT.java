@@ -37,7 +37,7 @@ class CustomOAuth2UserServiceIT {
     }
 
     private OAuth2UserRequest createOAuth2UserRequest(Map<String, Object> attributes) {
-        ClientRegistration clientRegistration = ClientRegistration.withRegistrationId("test-client")
+        ClientRegistration clientRegistration = ClientRegistration.withClientId("test-client-id")
                 .clientSecret("test-secret")
                 .clientAuthenticationMethod(org.springframework.security.oauth2.core.ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(org.springframework.security.oauth2.core.AuthorizationGrantType.AUTHORIZATION_CODE)
@@ -48,6 +48,7 @@ class CustomOAuth2UserServiceIT {
                 .userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
                 .userNameAttributeName("sub")
                 .clientName("google")
+                .registrationId("test-client")
                 .build();
 
         return new OAuth2UserRequest(clientRegistration, null);
