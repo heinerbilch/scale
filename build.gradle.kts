@@ -46,6 +46,7 @@ testing {
 
         register<JvmTestSuite>("integrationTest") {
             dependencies {
+	            implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
                 implementation("org.springframework.boot:spring-boot-starter-webmvc-test")
                 implementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
                 implementation("org.springframework.boot:spring-boot-h2console")

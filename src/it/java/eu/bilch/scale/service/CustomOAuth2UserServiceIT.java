@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("default")
-class CustomOAuth2UserServiceIntegrationTest {
+class CustomOAuth2UserServiceIT {
 
     @Autowired
     private UserRepository userRepository;
@@ -33,16 +33,16 @@ class CustomOAuth2UserServiceIntegrationTest {
 
     @AfterEach
     void tearDown() {
-        userRepository.deleteAll();
+ //       userRepository.deleteAll();
     }
 
     private OAuth2UserRequest createOAuth2UserRequest(Map<String, Object> attributes) {
-        ClientRegistration clientRegistration = ClientRegistration.withClientId("test-client")
+        ClientRegistration clientRegistration = ClientRegistration.withRegistrationId("test-client")
                 .clientSecret("test-secret")
                 .clientAuthenticationMethod(org.springframework.security.oauth2.core.ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(org.springframework.security.oauth2.core.AuthorizationGrantType.AUTHORIZATION_CODE)
                 .redirectUri("http://localhost:8080/login/oauth2/code/google")
-                .scopes(Collections.singleton("openid"))
+                .scope(Collections.singleton("openid"))
                 .authorizationUri("https://accounts.google.com/o/oauth2/auth")
                 .tokenUri("https://oauth2.googleapis.com/token")
                 .userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
